@@ -18,11 +18,12 @@ public class UserDetailsImpl implements UserDetails {
     private final Long id;
 
     private final String username;
+    private final String firstName;
+    private final String lastName;
     private final String email;
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
-    private String firstName;
-    private String lastName;
+
 
     public UserDetailsImpl(Long id, String username, String firstName, String lastName, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
@@ -107,15 +108,7 @@ public class UserDetailsImpl implements UserDetails {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 }

@@ -10,10 +10,6 @@ import static com.soccer.api.models.ERole.*;
 public class BachelorarbeitV3Application {
 
     public static void main(String[] args) {
- /*       Role role = new Role();
-        role.setName(ROLE_PLAYER);
-        role.setName(ROLE_COACH);
-        role.setName(ROLE_ADMIN);*/
         SpringApplication.run(BachelorarbeitV3Application.class, args);
     }
 
