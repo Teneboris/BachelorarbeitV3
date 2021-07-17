@@ -11,8 +11,8 @@ import com.soccer.api.repository.RoleRepository;
 import com.soccer.api.repository.UserRepository;
 import com.soccer.api.security.jwt.JwtUtils;
 import com.soccer.api.security.services.UserDetailsImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -61,12 +62,13 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
+        return ResponseEntity.ok(new JwtResponse(
+                jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
-                userDetails.getEmail(),
                 userDetails.getFirstName(),
                 userDetails.getLastName(),
+                userDetails.getEmail(),
                 roles));
     }
 
@@ -126,5 +128,17 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @GetMapping("/all/users")
+    public ResponseEntity<List<User>> findAllUsers() {
+        List<User> users = userRepository.findAll();
+        return ResponseEntity.ok(users);  // return 200, with json body
+    }
+
+    @GetMapping(path = "/users/{id}")
+    public ResponseEntity<Optional<User>> getUsersById(@PathVariable long id) {
+        Optional<User> user = userRepository.findById(id);
+        return ResponseEntity.ok(user);  // return 200, with json body
     }
 }

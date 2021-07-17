@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "trainingsplan")
-public class CreateTraining {
+public class TrainingsPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,11 @@ public class CreateTraining {
     @Size(max = 1000)
     private String description;
 
-    public CreateTraining() {
+    public TrainingsPlan() {
 
     }
 
-    public CreateTraining(Date date, String title, String description) {
+    public TrainingsPlan(Date date, String title, String description) {
         this.date = date;
         this.title = title;
         this.description = description;
@@ -66,4 +66,5 @@ public class CreateTraining {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

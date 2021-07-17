@@ -41,4 +41,5 @@ public class TrainingsplanRequest {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

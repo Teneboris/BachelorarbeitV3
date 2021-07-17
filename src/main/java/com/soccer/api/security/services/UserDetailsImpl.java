@@ -29,9 +29,9 @@ public class UserDetailsImpl implements UserDetails {
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
-        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.password = password;
         this.authorities = authorities;
     }

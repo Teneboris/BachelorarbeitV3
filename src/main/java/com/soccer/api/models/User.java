@@ -54,10 +54,10 @@ public class User {
 
     public User(String username, String firstName, String lastName, String email, String password) {
         this.username = username;
-        this.email = email;
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
