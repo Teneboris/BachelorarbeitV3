@@ -20,6 +20,10 @@ public class MessageController {
     @Autowired
     MessageServices messageService;
 
+    @Autowired
+    MessageRepository messageRepository;
+
+
     @PostMapping("/postmessage")
     public ResponseEntity<?> PostMessage(@Valid @RequestBody Message message) {
         messageService.PostMessage(message);
@@ -33,9 +37,20 @@ public class MessageController {
     }
 
 
-    @GetMapping("/getfeedbackbyuser")
-    public ResponseEntity<List<Message>> GetFeedbackByUser() {
-        List<Message> feedback = messageService.findFeedbackByUser();
+    @GetMapping("/getfeedbackbyuser/{role}")
+    public ResponseEntity<List<ThemeForMessage>> GetFeedbackByUser(@PathVariable("role") ERole role) {
+        List<ThemeForMessage> feedback = messageService.findFeedbackByUser(role);
         return ResponseEntity.ok(feedback);  // return 200, with json body
+    }
+
+    @GetMapping("/getfeedbackbysubject/{id}")
+    public ResponseEntity<List<ThemeForMessage>> GetFeedbackBySuject(@PathVariable("id") Long id) {
+        List<ThemeForMessage> feedback = messageService.findFeedbackBySubject(id);
+        return ResponseEntity.ok(feedback);  // return 200, with json body
+    }
+
+    @DeleteMapping("/deletesubject/{id}")
+    public void DeleteSubject(@PathVariable Long id) {
+        messageService.deleteSubject(id);
     }
 }

@@ -1,8 +1,10 @@
 package com.soccer.api.playload.response;
 
+import com.soccer.api.models.DTO.FeedBackDTO;
+
 import java.util.List;
 
-public class JwtResponse {
+public class JwtResponse extends FeedBackDTO {
 
     private final List<String> roles;
     private String token;

@@ -1,4 +1,6 @@
 package com.soccer.api.models;
 
-public class CreateNews {
+public class News {
+
+
 }

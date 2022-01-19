@@ -18,4 +18,8 @@ public class TrainingsPlanService {
 
         return trainingsPlan.orElse(null);
     }
+
+    public void DeleteTrainings(Long id) {
+        trainainsplanRepository.deletetraining(id);
+    }
 }

@@ -41,6 +41,7 @@ public class TrainingsplanController {
         // Create new training's plan
         TrainingsPlan training = new TrainingsPlan(
                 trainingsplanRequest.getDate(),
+                trainingsplanRequest.getTrainingstime(),
                 trainingsplanRequest.getTitle(),
                 trainingsplanRequest.getDescription());
 
@@ -51,21 +52,24 @@ public class TrainingsplanController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TrainingsPlan> gettrainingsPlanById(@PathVariable("id") Long id) {
-
         TrainingsPlan trainings = trainingsPlanService.getTrainingById(id);
         return ResponseEntity.ok(trainings);  // return 200, with json body
     }
 
-    @DeleteMapping(path = "/deletetraining/{Id}")
+  /*  @DeleteMapping(path = "/deletetraining/{Id}")
     public ResponseEntity<Void> deleteTrainingById(@PathVariable long Id) {
         trainainsplanRepository.deleteById(Id);
         return ResponseEntity.ok().build();
-    }
+    }*/
 
     @GetMapping("/getAlltraining")
     public ResponseEntity<List<TrainingsPlan>> GetAllTraining() {
-
         List<TrainingsPlan> trainings = trainainsplanRepository.findAll();
         return ResponseEntity.ok(trainings);  // return 200, with json body
+    }
+
+    @DeleteMapping(path = "/deletetraining/{Id}")
+    public void DeleteTrainingsplan(@PathVariable long Id) {
+        trainingsPlanService.DeleteTrainings(Id);
     }
 }

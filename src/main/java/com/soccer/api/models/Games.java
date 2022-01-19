@@ -8,15 +8,22 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "createdGames")
-public class CreateGames {
+@Table(name = "games")
+public class Games {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @NotBlank
+    @Size(max = 100)
+    private String title;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date date;
+
+    @JsonFormat(pattern = "dd-mm-yyyy HH:mm:ss")
+    private Date gamestime;
 
     @NotBlank
     @Size(max = 100)
@@ -25,10 +32,10 @@ public class CreateGames {
     @Size(max = 1000)
     private String description;
 
-    public CreateGames() {
+    public Games() {
     }
 
-    public CreateGames(Date date, String address, String description) {
+    public Games(Date date, String address, String description) {
         this.date = date;
         this.address = address;
         this.description = description;
@@ -64,5 +71,21 @@ public class CreateGames {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getGamestime() {
+        return gamestime;
+    }
+
+    public void setGamestime(Date gamestime) {
+        this.gamestime = gamestime;
     }
 }

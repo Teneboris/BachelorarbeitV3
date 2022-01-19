@@ -1,12 +1,11 @@
 package com.soccer.api.controllers;
 
-import com.soccer.api.models.ERole;
-import com.soccer.api.models.Role;
-import com.soccer.api.models.User;
+import com.soccer.api.models.*;
 import com.soccer.api.playload.request.LoginRequest;
 import com.soccer.api.playload.request.SignupRequest;
 import com.soccer.api.playload.response.JwtResponse;
 import com.soccer.api.playload.response.MessageResponse;
+import com.soccer.api.repository.PlayerPositionRepository;
 import com.soccer.api.repository.RoleRepository;
 import com.soccer.api.repository.UserRepository;
 import com.soccer.api.security.jwt.JwtUtils;
@@ -22,10 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -41,6 +37,9 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    PlayerPositionRepository playerPositionRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -123,12 +122,48 @@ public class AuthController {
                 }
             });
         }
+        Set<String> strPlayerPosition = signUpRequest.getPlayerposition();
+        Set<PlayerPosition> players = new HashSet<>();
 
+        if (strPlayerPosition == null) {
+            PlayerPosition userPlayer = playerPositionRepository.findByName(EPlayersPosition.DEFENCE)
+                    .orElseThrow(() -> new RuntimeException("Error: position defence is not found."));
+            players.add(userPlayer);
+        } else {
+            strPlayerPosition.forEach(player -> {
+                switch (player) {
+                    case "defence":
+                        PlayerPosition defense = playerPositionRepository.findByName(EPlayersPosition.DEFENCE)
+                                .orElseThrow(() -> new RuntimeException("Error:  position defence is not found."));
+                        players.add(defense);
+
+                        break;
+                    case "goalkeeper":
+                        PlayerPosition adminRole = playerPositionRepository.findByName(EPlayersPosition.GOALKEEPER)
+                                .orElseThrow(() -> new RuntimeException("Error:position goalkeeper is not found."));
+                        players.add(adminRole);
+
+                        break;
+                    case "midfield":
+                        PlayerPosition modRole = playerPositionRepository.findByName(EPlayersPosition.MIDFIELD)
+                                .orElseThrow(() -> new RuntimeException("Error: midfield is not found."));
+                        players.add(modRole);
+
+                        break;
+                    default:
+                        PlayerPosition userRole = playerPositionRepository.findByName(EPlayersPosition.STORM)
+                                .orElseThrow(() -> new RuntimeException("Error:position storm is not found."));
+                        players.add(userRole);
+                }
+            });
+        }
+        user.setPlayer(players);
         user.setRoles(roles);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
 
     @GetMapping("/all/users")
     public ResponseEntity<List<User>> findAllUsers() {

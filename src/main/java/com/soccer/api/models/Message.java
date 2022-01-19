@@ -1,11 +1,17 @@
 package com.soccer.api.models;
 
+import com.fasterxml.jackson.annotation.*;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -23,15 +29,28 @@ public class Message {
     @NotBlank
     private String message;
 
+    //private String displayby;
+
+    /*  @JsonFormat(pattern = "dd-mm-yyyy HH:mm:ss")
+      @JsonSerialize(using = LocalDateTimeSerializer.class)*/
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime postDate;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "receivermessage_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User userTo;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "training_id")
+    @JoinColumn(name = "sendermessage_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private TrainingsPlan trainings;
+    private User userFrom;
+
+    @ManyToOne()
+    @JoinColumn(name = "themeformessage_id")
+    @JsonBackReference()
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private ThemeForMessage themeForMessage;
 
     public Message() {
 
@@ -61,14 +80,6 @@ public class Message {
         this.id = id;
     }
 
-    public TrainingsPlan getTrainings() {
-        return trainings;
-    }
-
-    public void setTrainings(TrainingsPlan trainings) {
-        this.trainings = trainings;
-    }
-
     public User getUserTo() {
         return userTo;
     }
@@ -77,11 +88,11 @@ public class Message {
         this.userTo = userTo;
     }
 
-    public String getSubject() {
-        return subject;
+    /*public String getDisplayby() {
+        return displayby;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setDisplayby(String displayby) {
+        this.displayby = displayby;
     }
 }

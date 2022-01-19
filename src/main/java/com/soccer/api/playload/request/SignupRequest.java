@@ -24,6 +24,8 @@ public class SignupRequest {
 
     private Set<String> role;
 
+    private Set<String> playerposition;
+
     @NotBlank
     @Size(max = 40)
     private String password;
@@ -74,5 +76,13 @@ public class SignupRequest {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<String> getPlayerposition() {
+        return playerposition;
+    }
+
+    public void setPlayerposition(Set<String> playerposition) {
+        this.playerposition = playerposition;
     }
 }

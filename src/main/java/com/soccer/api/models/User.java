@@ -49,7 +49,17 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<Role>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_playersposition",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "playerposition_id"))
+    private Set<PlayerPosition> player = new HashSet<PlayerPosition>();
+
     public User() {
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 
     public User(String username, String firstName, String lastName, String email, String password) {
@@ -114,5 +124,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<PlayerPosition> getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Set<PlayerPosition> player) {
+        this.player = player;
     }
 }

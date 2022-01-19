@@ -1,11 +1,17 @@
 package com.soccer.api.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Entity
 @Table(name = "trainingsplan")
@@ -15,8 +21,11 @@ public class TrainingsPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private Date date;
+
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+    private Date trainingstime;
 
     @NotBlank
     @Size(max = 200)
@@ -29,8 +38,9 @@ public class TrainingsPlan {
 
     }
 
-    public TrainingsPlan(Date date, String title, String description) {
+    public TrainingsPlan(Date date, Date trainingstime, String title, String description) {
         this.date = date;
+        this.trainingstime = trainingstime;
         this.title = title;
         this.description = description;
     }
@@ -67,4 +77,16 @@ public class TrainingsPlan {
         this.description = description;
     }
 
+    public Date getTrainingstime() {
+        return trainingstime;
+    }
+
+    public void setTrainingstime(Date trainingstime) {
+        this.trainingstime = trainingstime;
+    }
+
+    @PostConstruct
+    public void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
 }

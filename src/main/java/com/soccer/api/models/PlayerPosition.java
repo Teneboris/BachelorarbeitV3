@@ -3,8 +3,8 @@ package com.soccer.api.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "targetdestinationmessage")
-public class TargetDestinationMessage {
+@Table(name = "playersposition")
+public class PlayerPosition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,14 +12,10 @@ public class TargetDestinationMessage {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private EMessageReceiver name;
+    private EPlayersPosition name;
 
-    public TargetDestinationMessage() {
+    public PlayerPosition() {
 
-    }
-
-    public TargetDestinationMessage(EMessageReceiver name) {
-        this.name = name;
     }
 
     public Integer getId() {
@@ -30,11 +26,11 @@ public class TargetDestinationMessage {
         this.id = id;
     }
 
-    public EMessageReceiver getName() {
+    public EPlayersPosition getName() {
         return name;
     }
 
-    public void setName(EMessageReceiver name) {
+    public void setName(EPlayersPosition name) {
         this.name = name;
     }
 }
