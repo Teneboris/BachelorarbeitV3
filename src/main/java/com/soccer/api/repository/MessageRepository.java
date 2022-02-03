@@ -15,4 +15,13 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query("Select a from Message a where a.userTo =?1 or a.userFrom = ?1 group by a.themeForMessage")
     List<Message> findFeedbackbyUser(User userTOId);
+
+    @Query("Select a from ThemeForMessage a join a.message m where m.userFrom = ?1 or m.userTo = ?1 group by a.id")
+    List<ThemeForMessage> findFeedbackBySubject(User user);
+
+    @Transactional
+    @Modifying
+    @Query("delete from ThemeForMessage b where b.id = ?1")
+    void deleteSubject(Long ids);
+
 }

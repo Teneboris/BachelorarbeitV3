@@ -1,11 +1,13 @@
 package com.soccer.api.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "games")
@@ -20,10 +22,11 @@ public class Games {
     private String title;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date date;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate gamesDate;
 
-    @JsonFormat(pattern = "dd-mm-yyyy HH:mm:ss")
-    private Date gamestime;
+    @JsonFormat(pattern = "hh:mm:ss")
+    private LocalTime gamesTime;
 
     @NotBlank
     @Size(max = 100)
@@ -33,12 +36,6 @@ public class Games {
     private String description;
 
     public Games() {
-    }
-
-    public Games(Date date, String address, String description) {
-        this.date = date;
-        this.address = address;
-        this.description = description;
     }
 
     public String getDescription() {
@@ -57,14 +54,6 @@ public class Games {
         this.address = location;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
     public Long getId() {
         return id;
     }
@@ -81,11 +70,20 @@ public class Games {
         this.title = title;
     }
 
-    public Date getGamestime() {
-        return gamestime;
+    public LocalDate getGamesDate() {
+        return gamesDate;
     }
 
-    public void setGamestime(Date gamestime) {
-        this.gamestime = gamestime;
+    public void setGamesDate(LocalDate gamesDate) {
+        this.gamesDate = gamesDate;
     }
+
+    public LocalTime getGamesTime() {
+        return gamesTime;
+    }
+
+    public void setGamesTime(LocalTime gamesTime) {
+        this.gamesTime = gamesTime;
+    }
+
 }

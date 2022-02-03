@@ -13,10 +13,6 @@ public interface TrainingsplanRepository extends JpaRepository<TrainingsPlan, Lo
 
     Optional<TrainingsPlan> findByTitle(String title);
 
-    Optional<TrainingsPlan> findByDate(Date date);
-
-    Boolean existsByDate(Date date);
-
     Boolean existsByTitle(String title);
 
     @Transactional

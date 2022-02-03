@@ -1,11 +1,15 @@
 package com.soccer.api.models;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,6 +43,10 @@ public class User {
     @Email
     private String email;
 
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate birthdate;
+
     @NotBlank
     @Size(max = 120)
     private String password;
@@ -62,11 +70,12 @@ public class User {
         this.id = id;
     }
 
-    public User(String username, String firstName, String lastName, String email, String password) {
+    public User(String username, String firstName, String lastName, String email, LocalDate birthdate, String password) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.birthdate = birthdate;
         this.password = password;
     }
 
@@ -132,5 +141,9 @@ public class User {
 
     public void setPlayer(Set<PlayerPosition> player) {
         this.player = player;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
     }
 }

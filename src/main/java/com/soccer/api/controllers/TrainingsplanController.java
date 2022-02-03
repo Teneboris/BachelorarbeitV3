@@ -1,7 +1,6 @@
 package com.soccer.api.controllers;
 
 import com.soccer.api.models.TrainingsPlan;
-import com.soccer.api.playload.request.TrainingsplanRequest;
 import com.soccer.api.playload.response.MessageResponse;
 import com.soccer.api.repository.TrainingsplanRepository;
 
@@ -25,28 +24,8 @@ public class TrainingsplanController {
     TrainingsPlanService trainingsPlanService;
 
     @PostMapping("/createtraining")
-    public ResponseEntity<?> CreateTraining(@Valid @RequestBody TrainingsplanRequest trainingsplanRequest) {
-        if (trainainsplanRepository.existsByDate(trainingsplanRequest.getDate())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Date is already taken!"));
-        }
-
-        if (trainainsplanRepository.existsByTitle(trainingsplanRequest.getTitle())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: title is already in use!"));
-        }
-
-        // Create new training's plan
-        TrainingsPlan training = new TrainingsPlan(
-                trainingsplanRequest.getDate(),
-                trainingsplanRequest.getTrainingstime(),
-                trainingsplanRequest.getTitle(),
-                trainingsplanRequest.getDescription());
-
-        trainainsplanRepository.save(training);
-
+    public ResponseEntity<?> CreateTraining(@Valid @RequestBody TrainingsPlan trainingsplan) {
+        trainingsPlanService.postTrainingsplan(trainingsplan);
         return ResponseEntity.ok(new MessageResponse("training created successfully!"));
     }
 

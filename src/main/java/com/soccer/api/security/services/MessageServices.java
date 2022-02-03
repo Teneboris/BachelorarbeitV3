@@ -11,8 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MessageServices {
@@ -120,5 +122,12 @@ public class MessageServices {
 
     public void deleteSubject(Long id) {
         messageRepository.deleteSubject(id);
+    }
+
+    public List<User> getAllplayers() {
+        List<User> players = userRepository.findAll().stream()
+                .filter(p -> !p.getPlayer().isEmpty())
+                .collect(Collectors.toList());
+        return players;
     }
 }

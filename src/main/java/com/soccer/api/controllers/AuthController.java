@@ -9,6 +9,7 @@ import com.soccer.api.repository.PlayerPositionRepository;
 import com.soccer.api.repository.RoleRepository;
 import com.soccer.api.repository.UserRepository;
 import com.soccer.api.security.jwt.JwtUtils;
+import com.soccer.api.security.services.MessageServices;
 import com.soccer.api.security.services.UserDetailsImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,6 +36,9 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    MessageServices messageService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -72,7 +77,9 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
+    @Transactional
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -84,16 +91,19 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
-
-        // Create new user's account
+        /**
+         * Create new user's account
+         */
         User user = new User(
                 signUpRequest.getUsername(),
                 signUpRequest.getFirstName(),
                 signUpRequest.getLastName(),
                 signUpRequest.getEmail(),
+                signUpRequest.getBirthdate(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
+        Set<String> strRoles = signUpRequest.getRoles();
+        //strRoles = new HashSet<>(Arrays.asList("admin"));
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
@@ -175,5 +185,11 @@ public class AuthController {
     public ResponseEntity<Optional<User>> getUsersById(@PathVariable long id) {
         Optional<User> user = userRepository.findById(id);
         return ResponseEntity.ok(user);  // return 200, with json body
+    }
+
+    @GetMapping("/getplayers")
+    public ResponseEntity<List<User>> getPlayers() {
+        List<User> players = messageService.getAllplayers();
+        return ResponseEntity.ok(players);
     }
 }

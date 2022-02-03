@@ -1,8 +1,11 @@
 package com.soccer.api;
 
 import com.soccer.api.models.Role;
+import com.soccer.api.models.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.util.List;
 
 import static com.soccer.api.models.ERole.*;
 

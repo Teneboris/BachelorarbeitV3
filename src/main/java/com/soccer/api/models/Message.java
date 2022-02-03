@@ -22,9 +22,6 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 50)
-    private String subject;
-
     @Size(max = 1000)
     @NotBlank
     private String message;
@@ -94,5 +91,29 @@ public class Message {
 
     public void setDisplayby(String displayby) {
         this.displayby = displayby;
+    }
+*/
+    public User getUserFrom() {
+        return userFrom;
+    }
+
+    public void setUserFrom(User userFrom) {
+        this.userFrom = userFrom;
+    }
+
+    public ThemeForMessage getThemeForMessage() {
+        return themeForMessage;
+    }
+
+    public void setThemeForMessage(ThemeForMessage themeForMessage) {
+        this.themeForMessage = themeForMessage;
+    }
+
+    public LocalDateTime getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(LocalDateTime postDate) {
+        this.postDate = postDate;
     }
 }

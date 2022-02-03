@@ -1,6 +1,10 @@
 package com.soccer.api.playload.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 public class SignupRequest {
@@ -22,13 +26,17 @@ public class SignupRequest {
     @Email
     private String email;
 
-    private Set<String> role;
+    private Set<String> roles;
 
     private Set<String> playerposition;
 
     @NotBlank
     @Size(max = 40)
     private String password;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate birthdate;
 
     public String getUsername() {
         return username;
@@ -54,12 +62,12 @@ public class SignupRequest {
         this.password = password;
     }
 
-    public Set<String> getRole() {
-        return this.role;
+    public Set<String> getRoles() {
+        return this.roles;
     }
 
-    public void setRole(Set<String> role) {
-        this.role = role;
+    public void setRoles(Set<String> role) {
+        this.roles = role;
     }
 
     public String getFirstName() {
@@ -84,5 +92,13 @@ public class SignupRequest {
 
     public void setPlayerposition(Set<String> playerposition) {
         this.playerposition = playerposition;
+    }
+
+    public LocalDate getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
     }
 }
