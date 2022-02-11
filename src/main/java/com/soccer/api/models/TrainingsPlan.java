@@ -19,12 +19,11 @@ public class TrainingsPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate TrainingsDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate trainingsdate;
 
-    @JsonFormat(pattern = "hh:mm:ss")
-    private LocalTime trainingsTime;
+    //private LocalTime trainingstime;
 
     @NotBlank
     @Size(max = 200)
@@ -66,21 +65,20 @@ public class TrainingsPlan {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
-    public LocalDate getTrainingsDate() {
-        return TrainingsDate;
+
+    public LocalDate getTrainingsdate() {
+        return trainingsdate;
     }
 
-    public void setTrainingsDate(LocalDate trainingsDate) {
-        TrainingsDate = trainingsDate;
+    public void setTrainingsdate(LocalDate trainingsdate) {
+        this.trainingsdate = trainingsdate;
     }
 
-    public LocalTime getTrainingsTime() {
-        return trainingsTime;
+  /*  public LocalTime getTrainingstime() {
+        return trainingstime;
     }
 
-    public void setTrainingsTime(LocalTime trainingsTime) {
-        this.trainingsTime = trainingsTime;
-    }
-
-
+    public void setTrainingstime(LocalTime trainingstime) {
+        this.trainingstime = trainingstime;
+    }*/
 }

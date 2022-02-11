@@ -21,11 +21,8 @@ public class Games {
     @Size(max = 100)
     private String title;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate gamesDate;
 
-    @JsonFormat(pattern = "hh:mm:ss")
     private LocalTime gamesTime;
 
     @NotBlank

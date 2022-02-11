@@ -6,6 +6,7 @@ import com.soccer.api.repository.TrainingsplanRepository;
 
 import com.soccer.api.security.services.TrainingsPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class TrainingsplanController {
         return ResponseEntity.ok(trainings);  // return 200, with json body
     }
 
-  /*  @DeleteMapping(path = "/deletetraining/{Id}")
+   /* @DeleteMapping(path = "/deletetraining/{Id}")
     public ResponseEntity<Void> deleteTrainingById(@PathVariable long Id) {
         trainainsplanRepository.deleteById(Id);
         return ResponseEntity.ok().build();
@@ -47,7 +48,7 @@ public class TrainingsplanController {
         return ResponseEntity.ok(trainings);  // return 200, with json body
     }
 
-    @DeleteMapping(path = "/deletetraining/{Id}")
+    @DeleteMapping("/deletetraining/{Id}")
     public void DeleteTrainingsplan(@PathVariable long Id) {
         trainingsPlanService.DeleteTrainings(Id);
     }

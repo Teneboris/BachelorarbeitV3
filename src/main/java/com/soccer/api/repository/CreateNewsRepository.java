@@ -1,4 +1,4 @@
 package com.soccer.api.repository;
 
-public class CreateNewsRepository {
+public interface CreateNewsRepository {
 }

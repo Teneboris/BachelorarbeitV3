@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/games")
-public class CreateGamesController {
+public class GamesController {
 
     @Autowired
     CreateGamesService createGamesService;
@@ -36,5 +36,10 @@ public class CreateGamesController {
     public ResponseEntity<Games> gettrainingsPlanById(@PathVariable("id") Long id) {
         Games game = createGamesService.getGameById(id);
         return ResponseEntity.ok(game);  // return 200, with json body
+    }
+
+    @DeleteMapping("/deletegame/{Id}")
+    public void DeleteGamePlan(@PathVariable long Id) {
+        createGamesService.DeleteGame(Id);
     }
 }

@@ -30,4 +30,9 @@ public class CreateGamesService {
 
         return game.orElse(null);
     }
+
+
+    public void DeleteGame(Long id) {
+        createGamesRepository.deletegame(id);
+    }
 }

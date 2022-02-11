@@ -77,7 +77,6 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    @Transactional
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -103,7 +102,7 @@ public class AuthController {
                 encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRoles();
-        //strRoles = new HashSet<>(Arrays.asList("admin"));
+       // strRoles = new HashSet<>(Arrays.asList("admin"));
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
